@@ -24,10 +24,8 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->web(append: [
             // Listando as rotas de recurso que o Postman deve ignorar.
             VerifyCsrfToken::except([
-                'tasks', 
-                'tasks/*',
-                'products', 
-                'products/*',
+
+                'produtos/*'
             ]),
         ]);
     })

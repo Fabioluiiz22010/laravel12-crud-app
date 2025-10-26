@@ -2,16 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
-use App\Http\Controllers\ProductController;
+use App\Http\Controllers\ProdutosController;
 
 
 //route resource for products
-Route::resource('/products', ProductController::class);
+Route::resource('/produtos', ProdutosController::class);
 
 Route::get('/', function () {
     return view('welcome');
 });
-use App\Http\Controllers\TaskController;
-
-// Aplicando o middleware 'authKey' a todas as rotas de tarefas
-Route::middleware('authKey')->resource('tasks', TaskController::class);
