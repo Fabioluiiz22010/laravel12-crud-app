@@ -1,0 +1,629 @@
+/*
+ * Este arquivo CSS contém os estilos globais e semânticos para as páginas de Produto.
+ * Ele recria o visual Bootstrap (formulários) e Tailwind (navegação).
+ */
+
+/* Variáveis de Cores e Tipografia */
+:root {
+    --primaryColor: #007bff; /* Azul primário (Gerenciamento/Criação Header) */
+    --warningColor: #ffc107; /* Amarelo (Edição) */
+    --successColor: #28a745; /* Verde (Salvar Criação/Novo Produto) */
+    --dangerColor: #dc3545; /* Vermelho (Excluir) */
+    --secondaryColor: #6c757d; /* Cinza (Voltar/Cancelar) */
+    --infoColor: #17a2b8; /* Azul claro (Info/Empty state) */
+    --lightColor: #f8f9fa; /* Fundo leve */
+    --textColorWhite: #fff;
+    --textColorDark: #212529;
+    --cardShadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15); /* Sombra pesada (shadow-lg) */
+    --tableShadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.075); /* Sombra leve (shadow-sm) */
+    --cardBorderRadius: 0.5rem;
+    
+    /* Cores específicas da Nav (Tailwindish) */
+    --navBgColor: #fff;
+    --navBorderColor: #f3f4f6; /* gray-100 */
+    --navTextColor: #6b7280; /* gray-500 */
+    --navHoverText: #4b5563; /* gray-700 */
+    --navHoverBg: #f3f4f6; /* gray-100 */
+    --navActiveText: #111827; /* gray-900 (simulado) */
+}
+
+/* 0. Estilos Globais Iniciais (Movidos do Layout) */
+.mainBody {
+    background-color: var(--lightColor); /* #f8f9fa */
+}
+
+/* 1. Container Principal (Simulando 'container' e 'margin-top: 50px') */
+.mainContainer {
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    padding: 0 15px;
+    margin-top: 50px; /* Estilo que estava inline */
+}
+
+
+/* ----------------------------------------------------------------------------------- */
+/* --- SEÇÃO DE ESTILOS DE NAVEGAÇÃO (NAVIGATION STYLES) --- */
+/* ----------------------------------------------------------------------------------- */
+
+.mainNav {
+    background-color: var(--navBgColor);
+    border-bottom: 1px solid var(--navBorderColor);
+    /* Garante que o Alpine.js funcione corretamente com display: none para o menu responsivo */
+}
+
+.navContainer {
+    max-width: 100%; /* Padrão Mobile */
+    margin-left: auto;
+    margin-right: auto;
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+}
+
+/* Quebra de tela para SM (640px) e LG (1024px) */
+@media (min-width: 640px) {
+    .navContainer {
+        padding-left: 1.5rem; /* sm:px-6 */
+        padding-right: 1.5rem; /* sm:px-6 */
+    }
+}
+@media (min-width: 1024px) {
+    .navContainer {
+        padding-left: 2rem; /* lg:px-8 */
+        padding-right: 2rem; /* lg:px-8 */
+    }
+}
+/* Recriando max-w-7xl */
+@media (min-width: 1280px) {
+    .navContainer {
+        max-width: 1280px; 
+    }
+}
+
+
+.navFlexWrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center; /* items-center */
+    height: 4rem; /* h-16 (16 * 0.25rem = 4rem) */
+}
+
+.navLinksGroup {
+    display: flex;
+    align-items: center;
+}
+
+.logoContainer {
+    flex-shrink: 0; /* shrink-0 */
+    display: flex;
+    align-items: center;
+}
+
+.appLogo {
+    padding: 0.5rem 0; /* Simula um logo com altura vertical */
+    font-weight: bold;
+    color: var(--textColorDark);
+}
+
+/* Links de Navegação Desktop (sm:flex) */
+.navLinksDesktop {
+    display: none; /* hidden (padrão mobile) */
+    align-items: center; /* flex */
+    margin-left: 2.5rem; /* sm:ms-10 */
+}
+
+/* Somente aplica em telas maiores que SM */
+@media (min-width: 640px) {
+    .navLinksDesktop {
+        display: flex; 
+        /* space-x-8 */
+        gap: 2rem; 
+        /* -my-px */
+        margin-top: -1px; 
+        margin-bottom: -1px;
+    }
+}
+
+/* Links de Navegação (Dentro do componente x-nav-link)
+   Estes estilos devem ser aplicados dentro dos seus componentes Blade. */
+.navLinkItem {
+    /* Estilos do Tailwind nav-link: flex items-center px-1 pt-1 border-b-2 */
+    display: inline-flex;
+    align-items: center;
+    padding-top: 0.25rem;
+    padding-bottom: 0.25rem;
+    padding-left: 0.25rem;
+    padding-right: 0.25rem;
+    border-bottom: 2px solid transparent;
+    font-size: 1rem;
+    line-height: 1.5rem;
+    font-weight: 500;
+    color: var(--navTextColor);
+    transition: color 150ms ease-in-out, border-color 150ms ease-in-out;
+}
+.navLinkItem:hover {
+    color: var(--navHoverText);
+    border-color: var(--navHoverBg);
+}
+.navLinkItem.active {
+    /* Active: text-gray-900 border-indigo-400 */
+    color: var(--navActiveText);
+    border-color: var(--primaryColor); /* Usando primaryColor como indigo-400 */
+}
+
+
+/* Dropdown de Configurações (sm:flex) */
+.settingsDropdownContainer {
+    display: none; /* hidden (padrão mobile) */
+    align-items: center;
+    margin-left: 1.5rem; /* sm:ms-6 */
+}
+@media (min-width: 640px) {
+    .settingsDropdownContainer {
+        display: flex; 
+    }
+}
+
+.dropdownTriggerButton {
+    /* inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150 */
+    display: inline-flex;
+    align-items: center;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid transparent;
+    font-size: 0.875rem;
+    line-height: 1.25rem;
+    font-weight: 500;
+    border-radius: 0.375rem;
+    color: var(--navTextColor);
+    background-color: var(--navBgColor);
+    transition: all 150ms ease-in-out;
+}
+.dropdownTriggerButton:hover {
+    color: var(--navHoverText);
+}
+.dropdownTriggerButton:focus {
+    outline: none;
+}
+
+.dropdownArrow {
+    margin-left: 0.25rem; /* ms-1 */
+}
+
+.dropdownArrowSvg {
+    fill: currentColor;
+    height: 1rem; /* h-4 */
+    width: 1rem; /* w-4 */
+}
+
+/* Hamburger (sm:hidden) */
+.hamburgerContainer {
+    display: flex;
+    align-items: center;
+    margin-right: -0.5rem; /* -me-2 */
+}
+@media (min-width: 640px) {
+    .hamburgerContainer {
+        display: none; /* sm:hidden */
+    }
+}
+
+.hamburgerButton {
+    /* inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none transition duration-150 ease-in-out */
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0.5rem;
+    border-radius: 0.375rem;
+    color: #9ca3af; /* gray-400 */
+    transition: all 150ms ease-in-out;
+}
+.hamburgerButton:hover {
+    color: var(--navTextColor); /* hover:text-gray-500 */
+    background-color: var(--navHoverBg); /* hover:bg-gray-100 */
+}
+.hamburgerButton:focus {
+    outline: none;
+    background-color: var(--navHoverBg); /* focus:bg-gray-100 */
+    color: var(--navTextColor); /* focus:text-gray-500 */
+}
+
+.hamburgerSvg {
+    height: 1.5rem; /* h-6 */
+    width: 1.5rem; /* w-6 */
+    stroke: currentColor;
+    fill: none;
+}
+/* Classes para o Alpine.js: hidden e inline-flex */
+.hamburgerIconOpen {
+    display: inline-flex;
+}
+.hamburgerIconClosed {
+    display: none;
+}
+
+
+/* Menu Responsivo (Mobile) */
+.navResponsiveMenu {
+    /* hidden sm:hidden */
+    /* A visibilidade é controlada pelo Alpine.js (:class="{'block': open, 'hidden': ! open}") */
+    padding-bottom: 0.75rem; /* pb-3 */
+}
+@media (min-width: 640px) {
+    .navResponsiveMenu {
+        display: none; 
+    }
+}
+
+.navResponsiveLinkGroup {
+    padding-top: 0.5rem; /* pt-2 */
+    padding-bottom: 0.75rem; /* pb-3 */
+    /* space-y-1 */
+}
+.navResponsiveLinkGroup > * {
+    margin-top: 0.25rem; /* space-y-1 */
+}
+
+.navResponsiveSettings {
+    padding-top: 1rem; /* pt-4 */
+    padding-bottom: 0.25rem; /* pb-1 */
+    border-top: 1px solid #e5e7eb; /* border-t border-gray-200 */
+}
+
+.responsiveUserHeader {
+    padding-left: 1rem; /* px-4 */
+    padding-right: 1rem; /* px-4 */
+}
+
+.responsiveUserName {
+    font-size: 1rem; /* text-base */
+    line-height: 1.5rem;
+    font-weight: 500; /* font-medium */
+    color: #1f2937; /* text-gray-800 */
+}
+
+.responsiveUserEmail {
+    font-size: 0.875rem; /* text-sm */
+    line-height: 1.25rem;
+    font-weight: 500; /* font-medium */
+    color: var(--navTextColor); /* text-gray-500 */
+}
+
+.responsiveSettingsLinkGroup {
+    margin-top: 0.75rem; /* mt-3 */
+    /* space-y-1 */
+}
+.responsiveSettingsLinkGroup > * {
+    margin-top: 0.25rem; /* space-y-1 */
+}
+
+
+/* ----------------------------------------------------------------------------------- */
+/* --- ESTILOS DE FORMULÁRIO (Criação e Edição) --- */
+/* ----------------------------------------------------------------------------------- */
+
+/* 2. Card do Formulário (Simulando 'card shadow-lg border-0') */
+.productFormCard {
+    background-color: var(--textColorWhite);
+    border-radius: var(--cardBorderRadius);
+    box-shadow: var(--cardShadow);
+    margin-top: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* 3. Cabeçalho do Card (Padrão Criação - Azul) */
+.formHeader {
+    background-color: var(--primaryColor);
+    color: var(--textColorWhite);
+    padding: 1rem 1.5rem;
+    text-align: center;
+    border-top-left-radius: var(--cardBorderRadius);
+    border-top-right-radius: var(--cardBorderRadius);
+}
+
+/* Cabeçalho de Edição (Sobrescreve o fundo para Amarelo) */
+.formHeaderEdit {
+    background-color: var(--warningColor);
+    color: var(--textColorDark);
+}
+
+.formHeader h2 {
+    margin: 0; 
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+
+/* 4. Corpo do Formulário */
+.formBody {
+    padding: 2rem;
+}
+
+/* Layouts de campos */
+.formRow {
+    display: flex;
+    flex-wrap: wrap;
+    margin-left: -0.75rem; 
+    margin-right: -0.75rem;
+}
+
+.formCol {
+    padding-left: 0.75rem;
+    padding-right: 0.75rem;
+    margin-bottom: 1rem;
+    width: 100%; 
+}
+
+@media (min-width: 768px) {
+    .formCol {
+        width: 50%;
+    }
+}
+
+.formGroupSpaced {
+    margin-bottom: 1.5rem; 
+}
+
+/* Elementos de Formulário */
+.formLabel {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: bold; 
+    color: var(--textColorDark);
+}
+
+.formInput {
+    /* Estilos de form-control */
+    display: block;
+    width: 100%;
+    padding: 0.675rem 0.75rem;
+    font-size: 1rem;
+    line-height: 1.5;
+    color: var(--textColorDark);
+    background-color: var(--textColorWhite);
+    border: 1px solid #ced4da;
+    border-radius: 0.3rem;
+    transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.formInput:focus {
+    border-color: #80bdff;
+    outline: 0;
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.25);
+}
+
+.formInput.isInvalid {
+    border-color: var(--dangerColor);
+}
+
+.errorFeedback {
+    display: block;
+    width: 100%;
+    margin-top: 0.25rem;
+    font-size: 0.875em;
+    color: var(--dangerColor);
+}
+
+/* Ações e Botões */
+.formActions {
+    display: flex; 
+    justify-content: space-between; 
+    margin-top: 1.5rem; 
+}
+
+.formActionsSpaced {
+    margin-top: 2rem; 
+}
+
+/* Estilo base dos botões de formulário */
+.btnBase {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.75rem 1.5rem; 
+    font-size: 1.25rem; 
+    line-height: 1.5;
+    border-radius: 0.3rem;
+    transition: all 0.15s ease-in-out;
+    text-decoration: none; 
+    cursor: pointer;
+}
+
+.btnSave {
+    composes: btnBase;
+    color: var(--textColorWhite);
+    background-color: var(--successColor);
+    border-color: var(--successColor);
+}
+
+.btnSave:hover {
+    background-color: #1e7e34;
+    border-color: #1c7430;
+}
+
+.btnUpdate {
+    composes: btnBase;
+    color: var(--textColorDark); 
+    background-color: var(--warningColor);
+    border-color: var(--warningColor);
+}
+
+.btnUpdate:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+.btnBack {
+    composes: btnBase;
+    color: var(--textColorWhite);
+    background-color: var(--secondaryColor);
+    border-color: var(--secondaryColor);
+}
+
+.btnBack:hover {
+    background-color: #545b62;
+    border-color: #4c5258;
+}
+
+/* --- ESTILOS DE LISTAGEM (Index) --- */
+
+/* Cabeçalho da Lista (Simulando d-flex justify-content-between align-items-center mb-4) */
+.listHeaderGroup {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+}
+
+.listTitle {
+    color: var(--primaryColor);
+    font-size: 2rem;
+    margin: 0;
+}
+
+/* Botão Criar Novo Produto (Simulando btn btn-success) */
+.btnCreateNew {
+    /* com os estilos de btnBase, mas com tamanho padrão */
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.5rem 1rem; 
+    font-size: 1rem; 
+    line-height: 1.5;
+    border-radius: 0.3rem;
+    transition: all 0.15s ease-in-out;
+    text-decoration: none;
+    cursor: pointer;
+
+    color: var(--textColorWhite);
+    background-color: var(--successColor);
+    border-color: var(--successColor);
+}
+
+.btnCreateNew:hover {
+    background-color: #1e7e34;
+    border-color: #1c7430;
+}
+
+/* Mensagem de Lista Vazia (Simulando alert alert-info text-center) */
+.emptyListMessage {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border: 1px solid var(--infoColor);
+    border-radius: 0.25rem;
+    background-color: #d9edf7;
+    color: #0c5460;
+    text-align: center;
+}
+
+/* Alerta de Sucesso (Mantém as classes BS para funcionalidade JS, mas adiciona margem) */
+.listAlert {
+    margin-bottom: 1rem;
+}
+
+/* Tabela de Produtos (Simulando table-responsive bg-white shadow-sm rounded) */
+.productsTableWrapper {
+    overflow-x: auto;
+    background-color: var(--textColorWhite);
+    box-shadow: var(--tableShadow);
+    border-radius: var(--cardBorderRadius);
+}
+
+.productsTable {
+    width: 100%;
+    margin-bottom: 0; 
+    border-collapse: collapse;
+    color: var(--textColorDark);
+}
+
+.productsTable th, .productsTable td {
+    padding: 0.75rem;
+    vertical-align: top;
+    border-top: 1px solid #dee2e6;
+    text-align: left;
+}
+
+/* Estilo de Linha Pares/Ímpares (Simulando table-striped) */
+.productsTable tbody tr:nth-of-type(odd) {
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Efeito Hover (Simulando table-hover) */
+.productsTable tbody tr:hover {
+    background-color: rgba(0, 0, 0, 0.075);
+}
+
+/* Cabeçalho da Tabela (Simulando thead table-primary) */
+.tableHeadPrimary th {
+    color: var(--textColorWhite);
+    background-color: var(--primaryColor);
+    border-color: var(--primaryColor);
+    border-bottom: 2px solid var(--primaryColor);
+}
+
+/* Ações na Tabela (Simulando d-flex gap-2 e style="width: 150px;") */
+.columnActions {
+    min-width: 150px;
+    width: 150px;
+}
+
+.actionButtonsGroup {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.deleteFormInline {
+    display: inline;
+}
+
+/* Estilo base para botões SM de tabela */
+.btnTableBase {
+    display: inline-block;
+    font-weight: 400;
+    text-align: center;
+    vertical-align: middle;
+    user-select: none;
+    border: 1px solid transparent;
+    padding: 0.25rem 0.5rem; 
+    font-size: 0.875rem; 
+    line-height: 1.5;
+    border-radius: 0.2rem;
+    transition: color 0.15s ease-in-out, background-color 0.15s ease-in-out, border-color 0.15s ease-in-out;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* Botão Editar (btn btn-warning btn-sm) */
+.btnTableEdit {
+    composes: btnTableBase;
+    color: var(--textColorDark);
+    background-color: var(--warningColor);
+    border-color: var(--warningColor);
+}
+
+.btnTableEdit:hover {
+    background-color: #e0a800;
+    border-color: #d39e00;
+}
+
+/* Botão Excluir (btn btn-danger btn-sm) */
+.btnTableDelete {
+    composes: btnTableBase;
+    color: var(--textColorWhite);
+    background-color: var(--dangerColor);
+    border-color: var(--dangerColor);
+}
+
+.btnTableDelete:hover {
+    background-color: #bd2130;
+    border-color: #b21f2d;
+}
+
+/* Estilo para ícone (margem à direita) */
+.me2 {
+    margin-right: 0.5rem;
+}
